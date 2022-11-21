@@ -2,7 +2,9 @@
 
 ## C'EST PARTI POUR TOUT PETER
 
+<br/>
 ### 1ère méthode :
+<br/>
 
 On va supprimer les versions des kernel de notre OS Rocky de sortes que l'on ne puisse plus que lancer le mode rescue :
 
@@ -16,10 +18,13 @@ puis la commande :
 kernel-install remove KERNEL-VERSION
 ```
 il suffit de remplacer KERNEL-VERSION par celle obtenue grâce `uname -r`
+<br/>
 
 P.S. Dans mon cas, j'avais deux versions : 5.14.0-70.13.1.el9_0.x86_64 et 5.14.0-70.26.1.el9_0.x86_64 donc j'ai dû enlever les deux.
+<br/>
 
 ### 2ème méthode :
+<br/>
 
 J'ai nommé cette méthode le "Grand Vidage". On va tout simplement VIDER la partition sda1 du disque dur. C'est la partition utilisée pour l'os, donc ça peut être sympa de voir ce que ça fait quand y'a plus que des zéros dedans ^^
 
@@ -32,12 +37,14 @@ dd if=/dev/zero of=/dev/sda1
 `if=/dev/zero` permet de lire le fichier ``zero`` contenu dans le dossier ``/dev``
 
 `of=/dev/sda1` permet d'écrire dans le fichier `sda1`
+<br/>
 
 Maintenant, plus qu'à fermer la VM et la rouvrir et surprise, nous voici en mode rescue. 
 
 Good Luck 
 
 ### 3ème méthode :
+<br/>
 
 Adieu BASH
 
@@ -48,8 +55,10 @@ rm /bin/bash
 ```
 
 Eh bien, on ne peut même plus se connecter en root
+<br/>
 
 ### 4ème méthode :
+<br/>
 
 Qu'est-ce qu'il se passe si je déplace un fichier aussi important que ``login`` dans mon `/home` par exemple ?
 
@@ -63,4 +72,3 @@ mv /bin/login /home/hugoa
 ```
 
 puis un petit reboot et impossible de se connecter en root 
-
