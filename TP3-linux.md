@@ -10,6 +10,27 @@
 
 🌞 **Vous fournirez dans le compte-rendu**, en plus du fichier, **un exemple d'exécution avec une sortie**, dans des balises de code.
 
+```
+[root@tp3linux ~]# /srv/idcard/idcard.sh
+Machine name : tp3linux
+OS Rocky Linux 9.0 and kernel version is 5.14.0-70.30.1.el9_0.x86_64
+IP : 10.2.2.3
+RAM : 658M memory available on 960M total memory
+Disk : 5.0G space left
+Top 5 processes by RAM usage :
+  - /usr/bin/python3 -s /usr/sbin/firewalld --nofork --nopid
+  - /usr/sbin/NetworkManager --no-daemon
+  - /usr/lib/systemd/systemd --switched-root --system --deserialize 30
+  - /usr/lib/systemd/systemd --user
+  - sshd: root [priv]
+Listening ports :
+  - 323 udp : chronyd
+  - 22 tcp : sshd
+
+Here is your random cat : ./cat.png
+```
+
+
 # II. Script youtube-dl
 
 ## Rendu
