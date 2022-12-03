@@ -1,0 +1,9 @@
+[Unit]
+Description=Mon super service qui telecharge des videos youtube \^o^/
+
+[Service]
+ExecStart=/srv/yt/yt-v2.sh
+User=yt
+
+[Install]
+WantedBy=multi-user.targe
