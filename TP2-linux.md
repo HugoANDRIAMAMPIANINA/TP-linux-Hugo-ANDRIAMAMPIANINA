@@ -179,7 +179,7 @@ success
 [hugoa@tp2linux ~]$ ps -ef | grep -i NGINX
 root        1366       1  0 22:56 ?        00:00:00 nginx: master process /usr/sbin/nginx
 nginx       1367    1366  0 22:56 ?        00:00:00 nginx: worker process
-murci       1560    1177  0 23:21 pts/0    00:00:00 grep --color=auto -i NGINX
+hugoa       1560    1177  0 23:21 pts/0    00:00:00 grep --color=auto -i NGINX
 ```
 
 🌞 **Euh wait**
@@ -402,31 +402,54 @@ ExecStart=/usr/bin/nc -l 21527
 Nov 23 01:35:55 tp2linux systemd[1]: Started Super netcat tout fou.
 Nov 23 01:36:03 tp2linux systemd[1]: /etc/systemd/system/tp2_nc.service:1: Assignment outside of section. Ignoring.
 ```
-```bash
+
+```
 [hugoa@tp2linux ~]$ ss -le | grep tp2_nc
 tcp   LISTEN 0      10                                        0.0.0.0:21527                   0.0.0.0:*     ino:34455 sk:84 cgroup:/system.slice/tp2_nc.service <->
 tcp   LISTEN 0      10                                           [::]:21527                      [::]:*     ino:34454 sk:86 cgroup:/system.slice/tp2_nc.service v6only:1 <->
 ```
+
 - vérifer que juste ça marche en vous connectant au service depuis votre PC
 
 ```
-?????????????????
+[hugoa@fedora ~]$ nc -n 10.2.2.2 21527
+caca
+ctrobi1linux
 ```
 
 🌞 **Les logs de votre service**
 
-- mais euh, ça s'affiche où les messages envoyés par le client ? Dans les logs !
-- `sudo journalctl -xe -u tp2_nc` pour visualiser les logs de votre service
-- `sudo journalctl -xe -u tp2_nc -f ` pour visualiser **en temps réel** les logs de votre service
-  - `-f` comme follow (on "suit" l'arrivée des logs en temps réel)
-- dans le compte-rendu je veux
   - une commande `journalctl` filtrée avec `grep` qui affiche la ligne qui indique le démarrage du service
   - une commande `journalctl` filtrée avec `grep` qui affiche un message reçu qui a été envoyé par le client
   - une commande `journalctl` filtrée avec `grep` qui affiche la ligne qui indique l'arrêt du service
 
+```
+[hugoa@tp2linux ~]$ journalctl -xe -u tp2_nc | grep Started
+Dec 07 22:37:43 tp2linux systemd[1]: Started Super netcat tout fou.
+
+[hugoa@tp2linux ~]$ journalctl -xe -u tp2_nc | grep caca
+Dec 07 22:39:20 tp2linux nc[893]: caca
+[hugoa@tp2linux ~]$ journalctl -xe -u tp2_nc | grep ctro
+Dec 07 22:39:32 tp2linux nc[893]: ctrobi1linux
+
+[hugoa@tp2linux ~]$ journalctl -xe -u tp2_nc | grep Deactivated
+Dec 07 22:39:37 tp2linux systemd[1]: tp2_nc.service: Deactivated successfully.
+```
+
 🌞 **Affiner la définition du service**
 
-- faire en sorte que le service redémarre automatiquement s'il se termine
-  - comme ça, quand un client se co, puis se tire, le service se relancera tout seul
-  - ajoutez `Restart=always` dans la section `[Service]` de votre service
-  - n'oubliez pas d'indiquer au système que vous avez modifié les fichiers de service :)
+```
+[hugoa@tp2linux ~]$ sudo cat /etc/systemd/system/tp2_nc.service | grep Restart
+Restart=always
+
+[hugoa@tp2linux ~]$ sudo systemctl daemon-reload
+
+[hugoa@tp2linux ~]$ journalctl -xe -u tp2_nc | grep Dec
+Dec 07 22:42:21 tp2linux systemd[1]: Started Super netcat tout fou.
+Dec 07 22:43:00 tp2linux nc[909]: wow
+Dec 07 22:43:05 tp2linux nc[909]: camarchedefou
+Dec 07 22:43:08 tp2linux systemd[1]: tp2_nc.service: Deactivated successfully.
+Dec 07 22:43:08 tp2linux systemd[1]: tp2_nc.service: Scheduled restart job, restart counter is at 2.
+Dec 07 22:43:08 tp2linux systemd[1]: Stopped Super netcat tout fou.
+Dec 07 22:43:08 tp2linux systemd[1]: Started Super netcat tout fou.
+```
