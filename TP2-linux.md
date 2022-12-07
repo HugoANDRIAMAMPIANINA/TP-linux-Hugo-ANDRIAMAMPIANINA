@@ -2,11 +2,7 @@
 
 # I. Service SSH
 
-Le service SSH est déjà installé sur la machine, et il est aussi déjà démarré par défaut, c'est Rocky qui fait ça nativement.
-
 ## 1. Analyse du service
-
-On va, dans cette première partie, analyser le service SSH qui est en cours d'exécution.
 
 🌞 **S'assurer que le service `sshd` est démarré**
 
@@ -49,12 +45,6 @@ Nov 22 16:25:01 tp2linux sshd[857]: pam_unix(sshd:session): session opened for u
 ```
 
 ## 2. Modification du service
-
-Dans cette section, on va aller visiter et modifier le fichier de configuration du serveur SSH.
-
-Comme tout fichier de configuration, celui de SSH se trouve dans le dossier `/etc/`.
-
-Plus précisément, il existe un sous-dossier `/etc/ssh/` qui contient toute la configuration relative au protocole SSH
 
 🌞 **Identifier le fichier de configuration du serveur SSH**
 
@@ -108,13 +98,6 @@ hugoa@tp2linux's password:
 Last login: Tue Nov 22 22:21:46 2022 from 10.2.2.1
 [hugoa@tp2linux ~]$
 ```
-
-✨ **Bonus : affiner la conf du serveur SSH**
-
-- faites vos plus belles recherches internet pour améliorer la conf de SSH
-- par "améliorer" on entend essentiellement ici : augmenter son niveau de sécurité
-- le but c'est pas de me rendre 10000 lignes de conf que vous pompez sur internet pour le bonus, mais de vous éveiller à divers aspects de SSH, la sécu ou d'autres choses liées
-
 
 # II. Service HTTP
 
@@ -332,15 +315,9 @@ $ curl 10.2.2.2:26706
 
 ## 1. Au cas où vous auriez oublié
 
-Fait :smile:
+Fait \^o^/
 
 ## 2. Analyse des services existants
-
-Un service c'est quoi concrètement ? C'est juste un processus, que le système lance, et dont il s'occupe après.
-
-Il est défini dans un simple fichier texte, qui contient une info primordiale : la commande exécutée quand on "start" le service.
-
-Il est possible de définir beaucoup d'autres paramètres optionnels afin que notre service s'exécute dans de bonnes conditions.
 
 🌞 **Afficher le fichier de service SSH**
 
