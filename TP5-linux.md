@@ -536,3 +536,44 @@ mysql> SELECT COUNT(*) AS nb_tables FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_T
 +-----------+
 1 row in set (0.01 sec)
 ```
+
+# Partie 4 : Automatiser la résolution du TP
+
+Première étape :
+
+Lancer le script suivant sur la machine `db.tp5.linux` :
+
+**[db.sh](scripts/db.sh)**
+
+Deuxième étape :
+
+Créer le fichier `/srv/conf_apache` sur la machine `web.tp5.linux` :
+
+```bash
+<VirtualHost *:80>
+  # on indique le chemin de notre webroot
+  DocumentRoot /var/www/tp5_nextcloud/
+  # on précise le nom que saisissent les clients pour accéder au service
+  ServerName  web.tp5.linux
+
+  # on définit des règles d'accès sur notre webroot
+  <Directory /var/www/tp5_nextcloud/> 
+    Require all granted
+    AllowOverride All
+    Options FollowSymLinks MultiViews
+    <IfModule mod_dav.c>
+      Dav off
+    </IfModule>
+  </Directory>
+</VirtualHost>
+```
+
+Troisième étape :
+
+Lancer le script suivant sur la machine `web.tp5.linux` :
+
+**[web.sh](scripts/web.sh)**
+
+Reste plus qu'à visiter le site `http://web.tp5.linux` et rentrer les infos ET BOOM ça marche niquel \°o°/
+
+P.S. le mot de passe du user nextcloud est `oui`
