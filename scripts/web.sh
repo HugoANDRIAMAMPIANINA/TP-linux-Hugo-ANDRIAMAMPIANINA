@@ -8,7 +8,7 @@ fi
 
 sed -i 's/enforcing/permissive/g' /etc/selinux/config
 setenforce 0
-echo 'db.tp5.linux' | tee /etc/hostname
+echo 'web.tp5.linux' | tee /etc/hostname
 
 dnf install httpd -y > /dev/null
 echo "serveur Apache installé avec succès"
