@@ -432,14 +432,15 @@ mysql -h 10.105.1.12 -u nextcloud -p'oui' nextcloud < nextcloud-db_yyyymmddhhmms
 - si quelqu'un se plante 3 fois de password pour une co SSH en moins de 1 minute, il est ban
 
 ```
-[hugoa@dbtp6linux ~]$ sudo cat /etc/fail2ban/jail.local | grep findtime | head -2
-# A host is banned if it has generated "maxretry" during the last "findtime"
+[hugoa@dbtp6linux ~]$ sudo cat /etc/fail2ban/jail.local
+[...]
 findtime  = 1m
-
-[hugoa@dbtp6linux ~]$ sudo cat /etc/fail2ban/jail.local | grep maxretry | head -3
-# A host is banned if it has generated "maxretry" during the last "findtime"
-# "maxretry" is the number of failures before a host get banned.
+[...]
 maxretry = 3
+[...]
+[sshd]
+[...]
+enabled = true
 ```
 
 - vérifiez que ça fonctionne en vous faisant ban
